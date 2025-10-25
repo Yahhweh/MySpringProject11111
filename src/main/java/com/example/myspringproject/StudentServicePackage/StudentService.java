@@ -1,7 +1,7 @@
-    package com.example.myspringproject;
+    package com.example.myspringproject.StudentServicePackage;
 
-    import org.springframework.beans.factory.annotation.Autowired;
-    import org.springframework.jdbc.core.JdbcTemplate;
+    import com.example.myspringproject.Student;
+    import com.example.myspringproject.StudentRepo;
     import org.springframework.stereotype.Service;
 
     import java.util.List;
@@ -26,7 +26,10 @@
             if(studentRepo.findByRoom(student.getRoom()).isPresent())
                 throw new IllegalArgumentException("one student already live in this room");
 
-            if(student.getName().length() <= 1 || student.getName().contains("1")) throw new IllegalArgumentException("strange name");
+
+
+            if(!validationOfData.checkValidationOfName(student.getName())) throw new IllegalArgumentException("name should has only letters");
+            if(!validationOfData.checkValidationOfName(student.getSureName())) throw new IllegalArgumentException("sureName should has only letters");
 
             return studentRepo.save(student);
         }
@@ -42,8 +45,16 @@
             Student student = studentRepo.findById(studentId).orElseThrow();
             if(!(room == null)) student.setRoom(room);
             if(course != null) student.setCourse(course);
-            if(!(name == null)) student.setName(name);
-            if(!(sureName == null)) student.setSureName(sureName);
+            if(!(name == null))
+            {
+                if(!validationOfData.checkValidationOfName(name)) throw new IllegalArgumentException("name should has only letters");
+                student.setName(name);
+            }
+            if(!(sureName == null))
+                if(!validationOfData.checkValidationOfName(sureName)) throw new IllegalArgumentException("sureName should has only letters");
+                student.setSureName(sureName);
+
+
 
             studentRepo.save(student);
         }
