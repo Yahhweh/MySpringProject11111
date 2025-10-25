@@ -1,5 +1,8 @@
-package com.example.myspringproject;
+package com.example.myspringproject.Controller;
 
+import com.example.myspringproject.Classes.Student;
+import com.example.myspringproject.Classes.StudentDTO;
+import com.example.myspringproject.Repo.StudentRepo;
 import com.example.myspringproject.StudentServicePackage.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +28,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student)
+    public Student createStudent(@RequestBody StudentDTO student)
     {
         return studentService.createStudent(student);
     }

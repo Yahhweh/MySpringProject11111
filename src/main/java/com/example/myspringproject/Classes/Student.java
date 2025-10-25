@@ -1,0 +1,45 @@
+package com.example.myspringproject.Classes;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String sureName;
+    private Integer year;
+    private String course;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_number", referencedColumnName = "roomNumber")
+    private Room room;
+
+    public Student(String name, String sureName, Integer year, String course, Room room) {
+        this.name = name;
+        this.sureName = sureName;
+        this.year = year;
+        this.course = course;
+        this.room = room;
+    }
+
+    public Student() {}
+
+    public Long getId() { return id; }
+    public String getName() { return name; }
+    public String getSureName() { return sureName; }
+    public Integer getYear() { return year; }
+    public String getCourse() { return course; }
+    public Room getRoom() { return room; }  // ← возвращает Room объект
+
+    public void setId(Long id) { this.id = id; }
+    public void setName(String name) { this.name = name; }
+    public void setSureName(String sureName) { this.sureName = sureName; }
+    public void setYear(Integer year) { this.year = year; }
+    public void setCourse(String course) { this.course = course; }
+    public void setRoom(Room room) { this.room = room; }
+}
+
+

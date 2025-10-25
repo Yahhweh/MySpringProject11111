@@ -1,33 +1,19 @@
-package com.example.myspringproject;
+package com.example.myspringproject.Classes;
 
-import jakarta.persistence.*;
-
-@Entity
-public class Student {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class StudentDTO
+{
     private String name;
     private String sureName;
-    private Integer course;
+    private Integer year;
+    private String course;
     private String room;
 
-
-    public Student(String name, String sureName, Integer course, String room) {
+    public StudentDTO(String name, String sureName, Integer year, String course, String room) {
         this.name = name;
         this.sureName = sureName;
+        this.year = year;
         this.course = course;
         this.room = room;
-    }
-
-    public Student() {
-
-    }
-
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {
@@ -38,16 +24,16 @@ public class Student {
         return sureName;
     }
 
-    public Integer getCourse() {
+    public Integer getYear() {
+        return year;
+    }
+
+    public String getCourse() {
         return course;
     }
 
     public String getRoom() {
         return room;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -58,7 +44,11 @@ public class Student {
         this.sureName = sureName;
     }
 
-    public void setCourse(Integer course) {
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public void setCourse(String course) {
         this.course = course;
     }
 
