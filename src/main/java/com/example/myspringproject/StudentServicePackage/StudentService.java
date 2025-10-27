@@ -1,8 +1,10 @@
 package com.example.myspringproject.StudentServicePackage;
 
+import com.example.myspringproject.Classes.Course;
 import com.example.myspringproject.Classes.Room;
 import com.example.myspringproject.Classes.Student;
 import com.example.myspringproject.Classes.StudentDTO;
+import com.example.myspringproject.Repo.CourseRepo;
 import com.example.myspringproject.Repo.RoomRepo;
 import com.example.myspringproject.Repo.StudentRepo;
 import org.springframework.stereotype.Service;
@@ -13,10 +15,12 @@ import java.util.List;
 public class StudentService {
     private final RoomRepo roomRepo;
     private final StudentRepo studentRepo;
+    private  final CourseRepo courseRepo;
 
-    public StudentService(StudentRepo studentRepo, RoomRepo roomRepo) {
+    public StudentService(StudentRepo studentRepo, RoomRepo roomRepo, CourseRepo courseRepo) {
         this.studentRepo = studentRepo;
         this.roomRepo = roomRepo;
+        this.courseRepo = courseRepo;
     }
 
     public List<Student> showAllStudents() {
@@ -28,6 +32,7 @@ public class StudentService {
             throw new IllegalArgumentException("incorrect course");
 
         String roomNumber = studentDTO.getRoom();
+        String courseName = studentDTO.getCourse();
 
         if(roomRepo.findRoomByRoomNumber(roomNumber).isPresent())
         {
@@ -35,6 +40,10 @@ public class StudentService {
             int capacity = room.getCapacity();
             room.setCapacity(capacity+1);
         }
+
+        //end validation latter
+        Course course = courseRepo.findByName(courseName);
+
             Room room = roomRepo.findRoomByRoomNumber(roomNumber).orElseGet(() -> roomRepo.save(new Room(roomNumber, 1)));
         if(!validationOfData.checkValidationOfName(studentDTO.getName()))
             throw new IllegalArgumentException("name should has only letters");
@@ -45,7 +54,7 @@ public class StudentService {
         student.setName(studentDTO.getName());
         student.setSureName(studentDTO.getSureName());
         student.setYear(studentDTO.getYear());
-        student.setCourse(studentDTO.getCourse());
+        student.setCourse(course);
         student.setRoom(room);
 
         return studentRepo.save(student);

@@ -2,6 +2,7 @@ package com.example.myspringproject.StudentServicePackage;
 
 import com.example.myspringproject.Classes.Room;
 import com.example.myspringproject.Repo.RoomRepo;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class RoomService {
 
     }
 
+    @Transactional
     public void updateRoom(Long id, String roomNumber, String capacity) {
         Room room = roomRepo.findById(id).orElseThrow();
         if(roomNumber != null)

@@ -4,6 +4,7 @@ import com.example.myspringproject.Classes.Student;
 import com.example.myspringproject.Classes.StudentDTO;
 import com.example.myspringproject.Repo.StudentRepo;
 import com.example.myspringproject.StudentServicePackage.StudentService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,6 +40,7 @@ public class StudentController {
         studentService.deleteStudent(studentId);
     }
 
+    @Transactional
     @PutMapping("/put/{studentId}")
     public void updateStudent(@PathVariable Long studentId,
                               @RequestParam(value = "room", required = false) String room,
