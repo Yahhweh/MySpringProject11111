@@ -2,6 +2,7 @@ package com.example.myspringproject.Controller;
 
 import com.example.myspringproject.Classes.Student;
 import com.example.myspringproject.Classes.StudentDTO;
+import com.example.myspringproject.Classes.StudentResponseDTO;
 import com.example.myspringproject.Repo.StudentRepo;
 import com.example.myspringproject.StudentServicePackage.StudentService;
 import jakarta.transaction.Transactional;
@@ -23,7 +24,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<Student> showAllStudents()
+    public List<StudentResponseDTO> showAllStudents()
     {
         return studentService.showAllStudents();
     }

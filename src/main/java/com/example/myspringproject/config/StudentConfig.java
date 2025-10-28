@@ -10,8 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
  class DataConfig {
 
@@ -30,7 +28,8 @@ import java.util.List;
 
             System.out.println("✅ Rooms saved: " + roomRepo.count());
 
-            Course It = courseRepo.findByName("IT").orElseGet(() -> courseRepo.save(new Course("IT", 5)));
+            Course It = courseRepo.findByName("IT").orElseGet(() -> courseRepo.save(new Course("IT", 0)));
+
 
             System.out.println("✅ Courses saved: " + courseRepo.count());
 
@@ -40,6 +39,7 @@ import java.util.List;
             studentRepo.save(new Student("Nikita", "Protas", 1, It, room1302A));
 
             System.out.println("✅ Students saved: " + studentRepo.count());
+
         };
     }
 

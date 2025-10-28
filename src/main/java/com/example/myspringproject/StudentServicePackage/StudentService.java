@@ -1,14 +1,13 @@
 package com.example.myspringproject.StudentServicePackage;
 
-import com.example.myspringproject.Classes.Course;
-import com.example.myspringproject.Classes.Room;
-import com.example.myspringproject.Classes.Student;
-import com.example.myspringproject.Classes.StudentDTO;
+import com.example.myspringproject.Classes.*;
 import com.example.myspringproject.Repo.CourseRepo;
 import com.example.myspringproject.Repo.RoomRepo;
 import com.example.myspringproject.Repo.StudentRepo;
+import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,8 +22,28 @@ public class StudentService {
         this.courseRepo = courseRepo;
     }
 
-    public List<Student> showAllStudents() {
-        return studentRepo.findAll();
+    public StudentResponseDTO toDto(Student student) {
+        Course course = student.getCourse();
+        CourseShortDTO courseDTO = new CourseShortDTO(course.getId(), course.getName());
+        return new StudentResponseDTO(
+                student.getName(),
+                student.getSureName(),
+                student.getYear(),
+                courseDTO,
+                student.getRoom()
+        );
+    }
+
+    public List<StudentResponseDTO> showAllStudents() {
+        List<StudentResponseDTO> list = new ArrayList<>();
+
+        List<Student> StudentList =  studentRepo.findAll();
+
+        for (Student student : StudentList) {
+            list.add(toDto(student));
+        }
+
+        return list;
     }
 
     public Student createStudent(StudentDTO studentDTO) {
@@ -42,7 +61,7 @@ public class StudentService {
         }
 
         //end validation latter
-        Course course = courseRepo.findByName(courseName);
+        Course course = courseRepo.findByName(courseName).orElseThrow();
 
             Room room = roomRepo.findRoomByRoomNumber(roomNumber).orElseGet(() -> roomRepo.save(new Room(roomNumber, 1)));
         if(!validationOfData.checkValidationOfName(studentDTO.getName()))
