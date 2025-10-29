@@ -27,12 +27,12 @@ public class CourseService {
 
 
     public CourseShortDTO toDto(Course course) {
-        return new CourseShortDTO(course.getId(), course.getName());
+        return new CourseShortDTO(course.getId(), course.getName(), course.getCapacity());
     }
 
     public StudentResponseDTO toStudentDto(Student student) {
         Course course = student.getCourse();
-        CourseShortDTO courseDTO = new CourseShortDTO(course.getId(), course.getName());
+        CourseShortDTO courseDTO = new CourseShortDTO(course.getId(), course.getName(), course.getCapacity());
         return new StudentResponseDTO(
                 student.getName(),
                 student.getSureName(),
