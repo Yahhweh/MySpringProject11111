@@ -6,10 +6,15 @@ public class CourseShortDTO {
     private String name;
     private Integer capacity;
 
-    public CourseShortDTO(Long id,String name) {
+    public CourseShortDTO(Long id, String name, Integer capacity) {
         this.id = id;
         this.name = name;
-        this.capacity = 0;
+        this.capacity = capacity;
+    }
+
+    public CourseShortDTO( String name, Integer capacity) {
+        this.name = name;
+        this.capacity = capacity;
     }
 
     public Long getId() {

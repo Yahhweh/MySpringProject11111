@@ -1,6 +1,7 @@
 package com.example.myspringproject.config;
 
 import com.example.myspringproject.Classes.Course;
+import com.example.myspringproject.Classes.CourseShortDTO;
 import com.example.myspringproject.Classes.Room;
 import com.example.myspringproject.Repo.CourseRepo;
 import com.example.myspringproject.Repo.RoomRepo;
@@ -9,6 +10,8 @@ import com.example.myspringproject.Classes.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 @Configuration
  class DataConfig {
@@ -20,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 
             studentRepo.deleteAll();
             roomRepo.deleteAll();
+            courseRepo.deleteAll();
 
             Room room209A = roomRepo.save(new Room("209A", 1));
             Room room1202A = roomRepo.save(new Room("1202A", 1));
@@ -28,8 +32,12 @@ import org.springframework.context.annotation.Configuration;
 
             System.out.println("✅ Rooms saved: " + roomRepo.count());
 
-            Course It = courseRepo.findByName("IT").orElseGet(() -> courseRepo.save(new Course("IT", 0)));
 
+            Course It = new Course();
+            It.setName("IT");
+            It.setCapacity(0);
+            It.setStudents(List.of());
+            It = courseRepo.save(It);
 
             System.out.println("✅ Courses saved: " + courseRepo.count());
 

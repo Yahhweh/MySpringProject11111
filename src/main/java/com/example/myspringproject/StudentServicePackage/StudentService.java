@@ -4,7 +4,6 @@ import com.example.myspringproject.Classes.*;
 import com.example.myspringproject.Repo.CourseRepo;
 import com.example.myspringproject.Repo.RoomRepo;
 import com.example.myspringproject.Repo.StudentRepo;
-import org.aspectj.apache.bcel.generic.RET;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ public class StudentService {
 
     public StudentResponseDTO toDto(Student student) {
         Course course = student.getCourse();
-        CourseShortDTO courseDTO = new CourseShortDTO(course.getId(), course.getName());
+        CourseShortDTO courseDTO = new CourseShortDTO(course.getId(), course.getName(), course.getCapacity());
         return new StudentResponseDTO(
                 student.getName(),
                 student.getSureName(),
@@ -60,9 +59,13 @@ public class StudentService {
             room.setCapacity(capacity+1);
         }
 
-        //end validation latter
-        Course course = courseRepo.findByName(courseName).orElseThrow();
+        if(courseRepo.findByName(courseName).isPresent()) {
+            Course course = courseRepo.findByName(courseName).orElseThrow();
+            int capacityCourse = course.getCapacity();
+            course.setCapacity(capacityCourse + 1);
+        }
 
+        Course course = courseRepo.findByName(courseName).orElseGet(() -> courseRepo.save(new Course(courseName, 1)));
             Room room = roomRepo.findRoomByRoomNumber(roomNumber).orElseGet(() -> roomRepo.save(new Room(roomNumber, 1)));
         if(!validationOfData.checkValidationOfName(studentDTO.getName()))
             throw new IllegalArgumentException("name should has only letters");
