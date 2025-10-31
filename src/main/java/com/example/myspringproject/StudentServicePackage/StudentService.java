@@ -21,17 +21,6 @@ public class StudentService {
         this.courseRepo = courseRepo;
     }
 
-    public StudentResponseDTO toDto(Student student) {
-        Course course = student.getCourse();
-        CourseShortDTO courseDTO = new CourseShortDTO(course.getId(), course.getName(), course.getCapacity());
-        return new StudentResponseDTO(
-                student.getName(),
-                student.getSureName(),
-                student.getYear(),
-                courseDTO,
-                student.getRoom()
-        );
-    }
 
     public List<StudentResponseDTO> showAllStudents() {
         List<StudentResponseDTO> list = new ArrayList<>();
@@ -39,7 +28,7 @@ public class StudentService {
         List<Student> StudentList =  studentRepo.findAll();
 
         for (Student student : StudentList) {
-            list.add(toDto(student));
+            list.add(toStudentDTO.toStudentDto(student));
         }
 
         return list;

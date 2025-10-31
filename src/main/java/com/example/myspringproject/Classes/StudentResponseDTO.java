@@ -5,9 +5,9 @@ public class StudentResponseDTO {
     private String sureName;
     private Integer year;
     private CourseShortDTO course;
-    private Room room;
+    private RoomShortDTO room;
 
-    public StudentResponseDTO(String name, String sureName, Integer year, CourseShortDTO course, Room room) {
+    public StudentResponseDTO(String name, String sureName, Integer year, CourseShortDTO course, RoomShortDTO room) {
         this.name = name;
         this.sureName = sureName;
         this.year = year;
@@ -15,11 +15,11 @@ public class StudentResponseDTO {
         this.room =room;
     }
 
-    public Room getRoom() {
+    public RoomShortDTO getRoom() {
         return room;
     }
 
-    public void setRoom(Room room) {
+    public void setRoom(RoomShortDTO room) {
         this.room = room;
     }
 

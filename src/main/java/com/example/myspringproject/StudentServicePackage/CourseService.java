@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.myspringproject.StudentServicePackage.toStudentDTO.toStudentDto;
+
 @Service
 public class CourseService {
 
@@ -30,17 +32,12 @@ public class CourseService {
         return new CourseShortDTO(course.getId(), course.getName(), course.getCapacity());
     }
 
-    public StudentResponseDTO toStudentDto(Student student) {
-        Course course = student.getCourse();
-        CourseShortDTO courseDTO = new CourseShortDTO(course.getId(), course.getName(), course.getCapacity());
-        return new StudentResponseDTO(
-                student.getName(),
-                student.getSureName(),
-                student.getYear(),
-                courseDTO,
-                student.getRoom()
-        );
+    public RoomShortDTO toRoomShortDTO(Student student)
+    {
+        Room commonRoom = student.getRoom();
+        return new RoomShortDTO(commonRoom.getRoomNumber());
     }
+
 
 
 
