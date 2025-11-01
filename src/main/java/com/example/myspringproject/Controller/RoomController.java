@@ -1,14 +1,16 @@
 package com.example.myspringproject.Controller;
 
-import com.example.myspringproject.Classes.Room;
+import com.example.myspringproject.DTO.DetailedRoomDTO;
+import com.example.myspringproject.entity.Room;
 import com.example.myspringproject.Repo.RoomRepo;
-import com.example.myspringproject.StudentServicePackage.RoomService;
+import com.example.myspringproject.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
+@RequestMapping("/api")
 @RestController
 public class RoomController {
 
@@ -27,7 +29,13 @@ public class RoomController {
         return  roomService.getAllRooms();
     }
 
-    @PostMapping("rooms/")
+    @GetMapping("/rooms/detailed")
+    public List<DetailedRoomDTO> getDetailedRooms()
+    {
+        return  roomService.getAllDetailedRooms();
+    }
+
+    @PostMapping("/rooms")
     public Room createRoom(@RequestBody Room room)
     {
         return roomService.createRoom(room);

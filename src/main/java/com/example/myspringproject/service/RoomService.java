@@ -1,10 +1,12 @@
-package com.example.myspringproject.StudentServicePackage;
+package com.example.myspringproject.service;
 
-import com.example.myspringproject.Classes.Room;
+import com.example.myspringproject.DTO.DetailedRoomDTO;
+import com.example.myspringproject.entity.Room;
 import com.example.myspringproject.Repo.RoomRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,5 +50,16 @@ public class RoomService {
             room.setCapacity(Integer.parseInt(capacity) );
         }
         roomRepo.save(room);
+    }
+
+    public List<DetailedRoomDTO> getAllDetailedRooms() {
+        List<Room> rooms = roomRepo.findAll();
+        List<DetailedRoomDTO> roomsDTO = new ArrayList<>();
+        for(Room room: rooms)
+        {
+        roomsDTO.add(toDetailedRoomDTO.toDetailedRoomDTOMethod(room));
+        }
+        return roomsDTO;
+
     }
 }

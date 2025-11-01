@@ -1,16 +1,18 @@
 package com.example.myspringproject.Controller;
 
-import com.example.myspringproject.Classes.Student;
-import com.example.myspringproject.Classes.StudentDTO;
-import com.example.myspringproject.Classes.StudentResponseDTO;
+import com.example.myspringproject.DTO.StudentShortedDTO;
+import com.example.myspringproject.entity.Student;
+import com.example.myspringproject.entity.StudentDTO;
+import com.example.myspringproject.DTO.StudentResponseDTO;
 import com.example.myspringproject.Repo.StudentRepo;
-import com.example.myspringproject.StudentServicePackage.StudentService;
+import com.example.myspringproject.service.StudentService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/api")
 @RestController
 public class StudentController {
 
@@ -24,9 +26,17 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentResponseDTO> showAllStudents()
+    @RequestMapping("/students")
+    public List<StudentShortedDTO> showAllStudents()
     {
         return studentService.showAllStudents();
+    }
+
+    @GetMapping
+    @RequestMapping("/students/detailed")
+    public List<StudentResponseDTO> showAllDetailedStudents()
+    {
+        return studentService.showAllDetailedStudents();
     }
 
     @PostMapping
@@ -35,14 +45,14 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
-    @DeleteMapping("/{studentId}")
+    @DeleteMapping("/students/{studentId}")
     public void deleteStudent(@PathVariable Long studentId)
     {
         studentService.deleteStudent(studentId);
     }
 
     @Transactional
-    @PutMapping("/put/{studentId}")
+    @PutMapping("/students/put/{studentId}")
     public void updateStudent(@PathVariable Long studentId,
                               @RequestParam(value = "room", required = false) String room,
                               @RequestParam(value = "course", required = false) Integer course,
@@ -51,4 +61,5 @@ public class StudentController {
     {
         studentService.updateStudent(studentId, room, course, name,sureName);
     }
+
 }

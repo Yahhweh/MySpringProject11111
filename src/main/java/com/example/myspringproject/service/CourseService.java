@@ -1,14 +1,19 @@
-package com.example.myspringproject.StudentServicePackage;
+package com.example.myspringproject.service;
 
-import com.example.myspringproject.Classes.*;
+import com.example.myspringproject.DTO.CourseRequestDTO;
+import com.example.myspringproject.DTO.CourseResponseDTO;
+import com.example.myspringproject.DTO.RoomRequestDTO;
+import com.example.myspringproject.DTO.StudentResponseDTO;
 import com.example.myspringproject.Repo.CourseRepo;
 import com.example.myspringproject.Repo.StudentRepo;
+import com.example.myspringproject.entity.Course;
+import com.example.myspringproject.entity.Room;
+import com.example.myspringproject.entity.Student;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.myspringproject.StudentServicePackage.toStudentDTO.toStudentDto;
 
 @Service
 public class CourseService {
@@ -28,25 +33,25 @@ public class CourseService {
     }
 
 
-    public CourseShortDTO toDto(Course course) {
-        return new CourseShortDTO(course.getId(), course.getName(), course.getCapacity());
+    public CourseRequestDTO toDto(Course course) {
+        return new CourseRequestDTO(course.getName(), course.getCapacity());
     }
 
-    public RoomShortDTO toRoomShortDTO(Student student)
+    public RoomRequestDTO toRoomRequestDTO(Student student)
     {
         Room commonRoom = student.getRoom();
-        return new RoomShortDTO(commonRoom.getRoomNumber());
+        return new RoomRequestDTO(commonRoom.getRoomNumber());
     }
 
 
 
 
-    public List<CourseShortDTO> getAllCoursesDto() {
+    public List<CourseRequestDTO> getAllCoursesDto() {
         List<Course> courses = courseRepo.findAll();
-        List<CourseShortDTO> courseDTOs = new ArrayList<>();
+        List<CourseRequestDTO> courseDTOs = new ArrayList<>();
 
         for (Course course : courses) {
-            CourseShortDTO dto = toDto(course);
+            CourseRequestDTO dto = toDto(course);
             courseDTOs.add(dto);
         }
 
@@ -64,12 +69,11 @@ public class CourseService {
             List<Student> courseStudents = course.getStudents();
             if (courseStudents != null) {
                 for (Student student : courseStudents) {
-                    students.add(toStudentDto(student));
+                    students.add(ToStudentResponseDTO.toStudentDto(student));
                 }
             }
 
             CourseResponseDTO dto = new CourseResponseDTO();
-            dto.setId(course.getId());
             dto.setName(course.getName());
             dto.setCapacity(course.getCapacity());
             dto.setStudents(students);
@@ -80,7 +84,7 @@ public class CourseService {
         return responseCourses;
     }
 
-    public Course postCourse(CourseShortDTO course) {
+    public Course postCourse(CourseRequestDTO course) {
         if(courseRepo.findByName(course.getName()).isPresent()) throw  new IllegalArgumentException("course exists");
         Course course1 = new Course();
         course1.setName(course.getName());

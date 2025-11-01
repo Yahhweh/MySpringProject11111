@@ -1,9 +1,15 @@
-package com.example.myspringproject.StudentServicePackage;
+package com.example.myspringproject.service;
 
-import com.example.myspringproject.Classes.*;
+import com.example.myspringproject.DTO.StudentRequestDTO;
+import com.example.myspringproject.DTO.StudentResponseDTO;
+import com.example.myspringproject.DTO.StudentShortedDTO;
 import com.example.myspringproject.Repo.CourseRepo;
 import com.example.myspringproject.Repo.RoomRepo;
 import com.example.myspringproject.Repo.StudentRepo;
+import com.example.myspringproject.entity.Course;
+import com.example.myspringproject.entity.Room;
+import com.example.myspringproject.entity.Student;
+import com.example.myspringproject.entity.StudentDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,21 +28,37 @@ public class StudentService {
     }
 
 
-    public List<StudentResponseDTO> showAllStudents() {
+    public List<StudentResponseDTO> showAllDetailedStudents() {
         List<StudentResponseDTO> list = new ArrayList<>();
 
-        List<Student> StudentList =  studentRepo.findAll();
+        List<Student> studentList =  studentRepo.findAll();
 
-        for (Student student : StudentList) {
-            list.add(toStudentDTO.toStudentDto(student));
+        for (Student student : studentList) {
+            list.add(ToStudentResponseDTO.toStudentDto(student));
         }
 
         return list;
     }
 
+    public List<StudentShortedDTO> showAllStudents()
+    {
+        List<StudentShortedDTO> list = new ArrayList<>();
+        List<Student> studentList =  studentRepo.findAll();
+
+        for(Student student: studentList)
+        {
+            list.add(new StudentShortedDTO(student.getName(), student.getSureName(), student.getRoom().getRoomNumber()));
+        }
+        return list;
+
+    }
+
+
+
     public Student createStudent(StudentDTO studentDTO) {
         if(studentDTO.getYear() < 1 || studentDTO.getYear() > 4)
             throw new IllegalArgumentException("incorrect course");
+
 
         String roomNumber = studentDTO.getRoom();
         String courseName = studentDTO.getCourse();
@@ -45,6 +67,7 @@ public class StudentService {
         {
             Room room = roomRepo.findRoomByRoomNumber(roomNumber).orElseThrow();
             int capacity = room.getCapacity();
+            if(capacity + 1 > 2) throw new IllegalArgumentException("capacity cannot exceed 2");
             room.setCapacity(capacity+1);
         }
 
@@ -56,10 +79,6 @@ public class StudentService {
 
         Course course = courseRepo.findByName(courseName).orElseGet(() -> courseRepo.save(new Course(courseName, 1)));
             Room room = roomRepo.findRoomByRoomNumber(roomNumber).orElseGet(() -> roomRepo.save(new Room(roomNumber, 1)));
-        if(!validationOfData.checkValidationOfName(studentDTO.getName()))
-            throw new IllegalArgumentException("name should has only letters");
-        if(!validationOfData.checkValidationOfName(studentDTO.getSureName()))
-            throw new IllegalArgumentException("sureName should has only letters");
 
         Student student = new Student();
         student.setName(studentDTO.getName());
@@ -90,14 +109,11 @@ public class StudentService {
         if(year != null) student.setYear(year);
 
         if(name != null) {
-            if(!validationOfData.checkValidationOfName(name))
-                throw new IllegalArgumentException("name should has only letters");
             student.setName(name);
         }
 
         if(sureName != null) {
-            if(!validationOfData.checkValidationOfName(sureName))
-                throw new IllegalArgumentException("sureName should has only letters");
+
             student.setSureName(sureName);
         }
 

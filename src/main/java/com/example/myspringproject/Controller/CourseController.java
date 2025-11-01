@@ -1,14 +1,15 @@
 package com.example.myspringproject.Controller;
 
-import com.example.myspringproject.Classes.Course;
-import com.example.myspringproject.Classes.CourseResponseDTO;
-import com.example.myspringproject.Classes.CourseShortDTO;
+import com.example.myspringproject.entity.Course;
+import com.example.myspringproject.DTO.CourseRequestDTO;
+import com.example.myspringproject.DTO.CourseResponseDTO;
 import com.example.myspringproject.Repo.CourseRepo;
-import com.example.myspringproject.StudentServicePackage.CourseService;
+import com.example.myspringproject.service.CourseService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/api")
 @RestController
 public class CourseController {
 
@@ -20,19 +21,19 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    public List<CourseShortDTO> getAllCourses()
+    public List<CourseRequestDTO> getAllCourses()
     {
         return courseService.getAllCoursesDto();
     }
 
-    @GetMapping("/courses/full")
+    @GetMapping("/courses/detailed")
     public List<CourseResponseDTO> getAllCoursesPlusInfo()
     {
         return courseService.getAllCoursesPlusInfo();
     }
 
     @PostMapping("/courses")
-    public Course postCourse(@RequestBody CourseShortDTO course)
+    public Course postCourse(@RequestBody CourseRequestDTO course)
     {
         return  courseService.postCourse(course);
     }

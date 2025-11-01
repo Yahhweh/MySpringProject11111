@@ -1,6 +1,9 @@
-    package com.example.myspringproject.Classes;
+    package com.example.myspringproject.entity;
 
     import jakarta.persistence.*;
+    import jakarta.validation.constraints.Max;
+    import jakarta.validation.constraints.Min;
+    import jakarta.validation.constraints.NotNull;
 
     import java.util.List;
 
@@ -11,9 +14,12 @@
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         Long id;
+
         String name;
         @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         List<Student> students;
+        @Min(0)
+        @Max(50)
         Integer capacity;
 
 

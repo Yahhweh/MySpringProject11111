@@ -1,29 +1,19 @@
-package com.example.myspringproject.Classes;
+package com.example.myspringproject.entity;
 
-public class StudentResponseDTO {
+public class StudentDTO
+{
     private String name;
     private String sureName;
     private Integer year;
-    private CourseShortDTO course;
-    private RoomShortDTO room;
+    private String course;
+    private String room;
 
-    public StudentResponseDTO(String name, String sureName, Integer year, CourseShortDTO course, RoomShortDTO room) {
+    public StudentDTO(String name, String sureName, Integer year, String course, String room) {
         this.name = name;
         this.sureName = sureName;
         this.year = year;
         this.course = course;
-        this.room =room;
-    }
-
-    public RoomShortDTO getRoom() {
-        return room;
-    }
-
-    public void setRoom(RoomShortDTO room) {
         this.room = room;
-    }
-
-    public StudentResponseDTO() {
     }
 
     public String getName() {
@@ -38,8 +28,12 @@ public class StudentResponseDTO {
         return year;
     }
 
-    public CourseShortDTO getCourse() {
+    public String getCourse() {
         return course;
+    }
+
+    public String getRoom() {
+        return room;
     }
 
     public void setName(String name) {
@@ -54,12 +48,11 @@ public class StudentResponseDTO {
         this.year = year;
     }
 
-    public void setCourse(CourseShortDTO course) {
+    public void setCourse(String course) {
         this.course = course;
     }
 
-
+    public void setRoom(String room) {
+        this.room = room;
+    }
 }
-
-
-

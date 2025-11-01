@@ -1,16 +1,27 @@
-package com.example.myspringproject.Classes;
+package com.example.myspringproject.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 @Entity
+@Data
 public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 2, max = 20, message = "name length must be from 2 to 20 letters")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "name must contain only letters")
     private String name;
+    @Size(min = 2, max = 20, message = "sureName length must be from 2 to 20 letters")
+    @Pattern(regexp = "^[A-Za-z]+$", message = "sureName must contain only letters")
     private String sureName;
+    @Min(1)
+    @Max(4)
     private Integer year;
 
     @ManyToOne
@@ -25,6 +36,7 @@ public class Student {
     public Student(String name, String sureName, Integer year, Course course, Room room) {
         this.name = name;
         this.sureName = sureName;
+
         this.year = year;
         this.course = course;
         this.room = room;
@@ -32,18 +44,7 @@ public class Student {
 
     public Student() {}
 
-    public Long getId() { return id; }
-    public String getName() { return name; }
-    public String getSureName() { return sureName; }
-    public Integer getYear() { return year; }
-    public Course getCourse() { return course; }
-    public Room getRoom() { return room; }  // ← возвращает Room объект
 
-    public void setId(Long id) { this.id = id; }
-    public void setName(String name) { this.name = name; }
-    public void setSureName(String sureName) { this.sureName = sureName; }
-    public void setYear(Integer year) { this.year = year; }
-    public void setCourse(Course course) { this.course = course; }
     public void setRoom(Room room) {
         this.room = room;
         if (room != null && !room.getStudents().contains(this)) {

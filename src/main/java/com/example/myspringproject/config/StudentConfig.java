@@ -1,12 +1,11 @@
 package com.example.myspringproject.config;
 
-import com.example.myspringproject.Classes.Course;
-import com.example.myspringproject.Classes.CourseShortDTO;
-import com.example.myspringproject.Classes.Room;
+import com.example.myspringproject.entity.Course;
+import com.example.myspringproject.entity.Room;
 import com.example.myspringproject.Repo.CourseRepo;
 import com.example.myspringproject.Repo.RoomRepo;
 import com.example.myspringproject.Repo.StudentRepo;
-import com.example.myspringproject.Classes.Student;
+import com.example.myspringproject.entity.Student;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
