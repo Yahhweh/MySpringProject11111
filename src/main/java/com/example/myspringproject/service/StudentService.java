@@ -1,6 +1,5 @@
 package com.example.myspringproject.service;
 
-import com.example.myspringproject.DTO.StudentRequestDTO;
 import com.example.myspringproject.DTO.StudentResponseDTO;
 import com.example.myspringproject.DTO.StudentShortedDTO;
 import com.example.myspringproject.Repo.CourseRepo;
@@ -9,7 +8,7 @@ import com.example.myspringproject.Repo.StudentRepo;
 import com.example.myspringproject.entity.Course;
 import com.example.myspringproject.entity.Room;
 import com.example.myspringproject.entity.Student;
-import com.example.myspringproject.entity.StudentDTO;
+import com.example.myspringproject.DTO.StudentDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,13 +27,13 @@ public class StudentService {
     }
 
 
-    public List<StudentResponseDTO> showAllDetailedStudents() {
+   public List<StudentResponseDTO> showAllDetailedStudents() {
         List<StudentResponseDTO> list = new ArrayList<>();
 
         List<Student> studentList =  studentRepo.findAll();
 
         for (Student student : studentList) {
-            list.add(ToStudentResponseDTO.toStudentDto(student));
+            list.add((ToStudentResponseDTO.toStudentResponseDTOMethod(student)));
         }
 
         return list;

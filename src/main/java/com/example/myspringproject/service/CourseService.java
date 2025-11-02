@@ -60,29 +60,29 @@ public class CourseService {
 
 
 
-    public List<CourseResponseDTO> getAllCoursesPlusInfo() {
-        List<Course> courses = courseRepo.findAll();
-        List<CourseResponseDTO> responseCourses = new ArrayList<>();
-
-        for (Course course : courses) {
-            List<StudentResponseDTO> students = new ArrayList<>();
-            List<Student> courseStudents = course.getStudents();
-            if (courseStudents != null) {
-                for (Student student : courseStudents) {
-                    students.add(ToStudentResponseDTO.toStudentDto(student));
-                }
-            }
-
-            CourseResponseDTO dto = new CourseResponseDTO();
-            dto.setName(course.getName());
-            dto.setCapacity(course.getCapacity());
-            dto.setStudents(students);
-
-            responseCourses.add(dto);
-        }
-
-        return responseCourses;
-    }
+//    public List<CourseResponseDTO> getAllCoursesPlusInfo() {
+//        List<Course> courses = courseRepo.findAll();
+//        List<CourseResponseDTO> responseCourses = new ArrayList<>();
+//
+//        for (Course course : courses) {
+//            List<StudentResponseDTO> students = new ArrayList<>();
+//            List<Student> courseStudents = course.getStudents();
+//            if (courseStudents != null) {
+//                for (Student student : courseStudents) {
+//                    students.add(ToStudentResponseDTO.toStudentDto(student));
+//                }
+//            }
+//
+//            CourseResponseDTO dto = new CourseResponseDTO();
+//            dto.setName(course.getName());
+//            dto.setCapacity(course.getCapacity());
+//            dto.setStudents(students);
+//
+//            responseCourses.add(dto);
+//        }
+//
+//        return responseCourses;
+//    }
 
     public Course postCourse(CourseRequestDTO course) {
         if(courseRepo.findByName(course.getName()).isPresent()) throw  new IllegalArgumentException("course exists");

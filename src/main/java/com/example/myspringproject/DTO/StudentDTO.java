@@ -1,4 +1,4 @@
-package com.example.myspringproject.entity;
+package com.example.myspringproject.DTO;
 
 public class StudentDTO
 {

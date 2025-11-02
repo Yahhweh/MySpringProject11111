@@ -26,11 +26,11 @@ public class CourseController {
         return courseService.getAllCoursesDto();
     }
 
-    @GetMapping("/courses/detailed")
-    public List<CourseResponseDTO> getAllCoursesPlusInfo()
-    {
-        return courseService.getAllCoursesPlusInfo();
-    }
+//    @GetMapping("/courses/detailed")
+//    public List<CourseResponseDTO> getAllCoursesPlusInfo()
+//    {
+//        return courseService.getAllCoursesPlusInfo();
+//    }
 
     @PostMapping("/courses")
     public Course postCourse(@RequestBody CourseRequestDTO course)

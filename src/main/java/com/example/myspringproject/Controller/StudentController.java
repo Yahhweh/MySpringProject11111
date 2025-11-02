@@ -2,7 +2,7 @@ package com.example.myspringproject.Controller;
 
 import com.example.myspringproject.DTO.StudentShortedDTO;
 import com.example.myspringproject.entity.Student;
-import com.example.myspringproject.entity.StudentDTO;
+import com.example.myspringproject.DTO.StudentDTO;
 import com.example.myspringproject.DTO.StudentResponseDTO;
 import com.example.myspringproject.Repo.StudentRepo;
 import com.example.myspringproject.service.StudentService;
